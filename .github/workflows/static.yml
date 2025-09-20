@@ -1,9 +1,10 @@
-name: Deploy to GitHub Pages
+# 这是最简单的静态网站部署工作流
+name: Deploy static content to Pages
 
 on:
   push:
-    branches: ["main"] # 如果默认分支是 master，请改为 master
-  workflow_dispatch:
+    branches: ["main"] # 触发分支，如果是 master 就改成 master
+  workflow_dispatch:    # 允许手动触发
 
 permissions:
   contents: read
@@ -23,17 +24,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      # 这个步骤会将你的 index.md 转换为 index.html
       - name: Setup Pages
         uses: actions/configure-pages@v3
-        
-      # 这个步骤会直接上传整个仓库的文件，不需要构建
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: '.' # 上传根目录下的所有文件
-
+          path: '.' # 上传整个仓库根目录下的所有文件
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v2
